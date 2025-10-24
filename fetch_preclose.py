@@ -26,9 +26,6 @@ def get_stock_close_prices():
 	close_price_df.to_csv(f'pre_closeprice/{ddate}.csv')
 	return close_price_df
 
-def get_stock_close_wind():
-
-
 def get_stock_close_local():
 	ddate = datetime.now().date()
 	file_path = f'pre_closeprice/{ddate}.csv'
