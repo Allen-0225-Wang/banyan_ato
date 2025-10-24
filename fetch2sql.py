@@ -17,7 +17,6 @@ def combine_cols(posdf):
 	tradedate = tradetime.date()
 	newdf = pd.merge(posdf, price_df, on='symbol', how='left')
 	newdf = pd.merge(newdf, fundid_df, on='unitId', how='left')
-	newdf['symbol'] = newdf['symbol'].apply(lambda x : f'{x}.SH' if int(x) > 599999 else f'{x}.SZ')
 	newdf['trade_dt'] = tradedate
 	newdf['opdate'] = tradetime.strftime('%Y-%m-%d %H:%M:%S')
 	print(newdf)
@@ -33,8 +32,8 @@ def get_posinfo():
 	accts = ato.get_stockaccountinfo()
 	pdf = ato.query_positionbyproduct(accts, "test")
 	pdict = pdf[['unitId', 'symbol', 'holdQty']]
+	pdict['symbol'] = pdict['symbol'].apply(lambda x : f'{x}.SH' if int(x) > 599999 else f'{x}.SZ')
 	pdict.to_csv(f'positions/unitId.csv')
-	print(pdict)
 	pdf = combine_cols(pdict)
 	return pdf
 
