@@ -59,7 +59,7 @@ def get_productids():
 	return pdf
 
 if __name__ == "__main__":
-	# pdf = get_stock_close_local()
+	pdf = get_stock_close_local()
 	#pdf = get_stock_close_prices()
-	pdf = get_stock_close_prices_wind()
+	# pdf = get_stock_close_prices_wind()
 	print(pdf)
