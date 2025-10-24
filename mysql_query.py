@@ -117,4 +117,7 @@ def sqlalchemy_usage():
     
     # 查询数据到DataFrame
     df = db.query_to_dataframe("SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT = %s", {'TRADE_DT': "20251023"})
-    print(df.head())
+    print(df.head(5))
+
+if __name__ == "__main__":
+    sqlalchemy_usage()
