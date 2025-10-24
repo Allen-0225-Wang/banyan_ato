@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, text, MetaData, Table, select, func
 from sqlalchemy.orm import sessionmaker
 from typing import Optional, List, Dict
+from datetime import datetime
 import pandas as pd
 
 class MySQLAlchemyQuery:
@@ -11,10 +12,6 @@ class MySQLAlchemyQuery:
         # 创建引擎
         self.engine = create_engine(
             connection_string,
-            echo=False,  # 设置为True可以看到生成的SQL
-            pool_size=5,
-            max_overflow=10,
-            pool_pre_ping=True  # 连接前检查连接是否有效
         )
 
         self.Session = sessionmaker(bind=self.engine)
@@ -68,11 +65,11 @@ def sqlalchemy_usage():
     db = MySQLAlchemyQuery(
         host='44.241.205.126',
         user='shenzhen',
-        password='dvXGXNc32Q0r7t5db6GzaPGCnYs',
-        database='gbops'
+        password='dvXGXNc32Q0r7t5db6GzaPGCnYs=',
+        database='wind'
     )
     
-    df = db.query_to_dataframe("SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT = %s", {'TRADE_DT': "20251023"})
+    df = db.query_to_dataframe("SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT", {'TRADE_DT': 20251023})
     print(df.head(5))
 
 if __name__ == "__main__":
