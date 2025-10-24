@@ -3,7 +3,7 @@ sys.path.insert(0, '/home/gaoeng/mwang/workplace/new_banyan_ato/banyan_ato')
 import pandas as pd
 from ato_client import ATOClient
 from fetch_preclose import get_stock_close_local
-from config.config import useinfo, db_config, fund_position_mapping
+from config.config import *
 from datetime import datetime, date, timedelta
 from sqlalchemy import create_engine, types
 from utils import keep_sql, get_productids
