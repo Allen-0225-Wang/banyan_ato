@@ -34,6 +34,8 @@ def get_stock_close_prices_wind():
 	eod_df = pd.read_csv(file_path, dtype={'S_INFO_WINDCODE':str, 'S_DQ_PRECLOSE':float})
 	close_price_df = eod_df[['S_INFO_WINDCODE', 'S_DQ_PRECLOSE']]
 	close_price_df = close_price_df.rename(columns={'S_INFO_WINDCODE':'symbol', 'S_DQ_PRECLOSE':'preclose'})
+	stats_file()
+	close_price_df.to_csv(f'pre_closeprice/{ddate}.csv')
 	return close_price_df
 
 def get_stock_close_local():
