@@ -4,6 +4,7 @@ sys.path.insert(0, '/home/gaoeng/mwang/workplace/new_banyan_ato/banyan_ato')
 import pandas as pd
 import akshare as ak
 from datetime import datetime
+from mysql_query import fetch_eod_wind2local
 
 
 def stats_file():
@@ -26,6 +27,15 @@ def get_stock_close_prices():
 	close_price_df.to_csv(f'pre_closeprice/{ddate}.csv')
 	return close_price_df
 
+def get_stock_close_prices_wind():
+	fetch_eod_wind2local()
+	ddate = datetime.now().strftime('%Y%m%d')
+	file_path = f'eod/ashare_eodprices_{ddate}.csv'
+	eod_df = pd.read_csv(file_path, dtype={'S_INFO_WINDCODE':str, 'S_DQ_PRECLOSE':float})
+	close_price_df = eod_df[['S_INFO_WINDCODE', 'S_DQ_PRECLOSE']]
+	close_price_df = close_price_df.rename(columns={'S_INFO_WINDCODE':'symbol', 'S_DQ_PRECLOSE':'preclose'})
+	return close_price_df
+
 def get_stock_close_local():
 	ddate = datetime.now().date()
 	file_path = f'pre_closeprice/{ddate}.csv'
@@ -39,6 +49,7 @@ def get_productids():
 	return pdf
 
 if __name__ == "__main__":
-	pdf = get_stock_close_local()
+	# pdf = get_stock_close_local()
 	#pdf = get_stock_close_prices()
+	pdf = get_stock_close_prices_wind
 	print(pdf)

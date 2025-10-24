@@ -61,7 +61,7 @@ class MySQLAlchemyQuery:
         return self.query_to_dataframe(query, (table_name,))
 
 # 使用示例
-def sqlalchemy_usage():
+def fetch_eod_wind2local():
     db = MySQLAlchemyQuery(
         host='44.241.205.126',
         user='shenzhen',
@@ -74,4 +74,4 @@ def sqlalchemy_usage():
     print(f'查询结果已保存到 eod/ashare_eodprices_{now}.csv')
 
 if __name__ == "__main__":
-    sqlalchemy_usage()
+    fetch_eod_wind2local()
