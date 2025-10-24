@@ -12,6 +12,9 @@ build/
 develop-eggs/
 dist/
 downloads/
+trades/
+positions/
+pre_closeprice/
 eggs/
 .eggs/
 lib/
@@ -229,6 +232,3 @@ analysis_output/
 .cache/
 data_cache/
 
-trades/
-positions/
-pre_closeprice/
