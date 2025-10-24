@@ -68,8 +68,9 @@ def sqlalchemy_usage():
         password='dvXGXNc32Q0r7t5db6GzaPGCnYs=',
         database='wind'
     )
-    
-    df = db.query_to_dataframe("SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT", {'TRADE_DT': 20251023})
+    now = datetime.now().strftime('%Y%m%d')
+    df = db.query_to_dataframe("SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT='20251023'")
+    print(now)
     print(df.head(5))
 
 if __name__ == "__main__":
