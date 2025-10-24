@@ -70,7 +70,7 @@ def sqlalchemy_usage():
     )
     now = datetime.now().strftime('%Y%m%d')
     df = db.query_to_dataframe(f"SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT={now}")
-    df.to_csv('eod/ashare_eodprices_{now}.csv', index=False)
+    df.to_csv(f'eod/ashare_eodprices_{now}.csv', index=False)
     print(f'查询结果已保存到 eod/ashare_eodprices_{now}.csv')
 
 if __name__ == "__main__":
