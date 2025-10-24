@@ -11,7 +11,6 @@ from utils import keep_sql, get_productids
 
 def combine_cols(posdf):
 	price_df = get_stock_close_local()
-	print(price_df)
 	fundid_df = get_productids()
 	tradetime = datetime.now()
 	tradedate = tradetime.date()
@@ -19,7 +18,6 @@ def combine_cols(posdf):
 	newdf = pd.merge(newdf, fundid_df, on='unitId', how='left')
 	newdf['trade_dt'] = tradedate
 	newdf['opdate'] = tradetime.strftime('%Y-%m-%d %H:%M:%S')
-	print(newdf)
 	newdf = newdf[['trade_dt', 'fund_stra_id', 'symbol', 'holdQty', 'preclose', 'opdate']]
 	newdf = newdf.rename(columns={'symbol':'s_info_windcode', 'fund_stra_id':'fund_id', 
 								  'holdQty':'shares', 'preclose':'s_dq_close'})
@@ -42,12 +40,11 @@ def get_posinfo_local(date):
 
 def main():
 	pdf = get_posinfo()
-	print(pdf)
 	#pdf = get_posinfo_local('2025-09-23')[['trade_dt','fund_id','s_info_windcode','shares','s_dq_close','opdate']]
 	hnow = datetime.now().hour
 	print(pdf)
-	#sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
-	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
+	sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
+	keep_sql(db_config, pdf, sqlname, fund_position_mapping)
 
 
 if __name__ == '__main__':
