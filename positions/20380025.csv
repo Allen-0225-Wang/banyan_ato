@@ -1,0 +1,4 @@
+,unitId,unitName,accountId,accountUser,stkAcctCode,stkAcctName,marketType,symbol,symbolName,positionType,initQty,holdQty,algoEnableQty,orderEnableQty,costAmt,costPx,incomeAmt,interestIncome,interestCostAmt,positionValue,realizeIncomeAmt
+0,203800250001,金牛旭日单元1,203800066,888807201213,E082329781,国投ATX上海,2,600579,中化装备,1,200,200,200,200,1650.04,8.25,122.0,0.0,0.0,1772.0,0.0
+1,203800250001,金牛旭日单元1,203800066,888807201213,E082329781,国投ATX上海,2,600500,中化国际,1,6700,6700,6700,6700,26040.35,3.887,958.1,0.0,0.0,27001.0,0.0
+2,203800250001,金牛旭日单元1,203800066,888807201213,E082329781,国投ATX上海,2,563220,富国中证A500ETF,1,83,83,83,83,0.0,0.0,87.98,0.0,0.0,87.98,0.0
