@@ -34,6 +34,7 @@ def get_posinfo():
 	pdf = ato.query_positionbyproduct(accts, "test")
 	pdict = pdf[['unitId', 'symbol', 'holdQty']]
 	pdict.to_csv(f'positions/unitId.csv')
+	print(pdict)
 	pdf = combine_cols(pdict)
 	return pdf
 
