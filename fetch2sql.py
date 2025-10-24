@@ -42,6 +42,7 @@ def get_posinfo_local(date):
 
 def main():
 	pdf = get_posinfo()
+	print(pdf)
 	#pdf = get_posinfo_local('2025-09-23')[['trade_dt','fund_id','s_info_windcode','shares','s_dq_close','opdate']]
 	hnow = datetime.now().hour
 	print(pdf)
