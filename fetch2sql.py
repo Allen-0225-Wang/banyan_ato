@@ -11,6 +11,7 @@ from utils import keep_sql, get_productids
 
 def combine_cols(posdf):
 	price_df = get_stock_close_local()
+	print(price_df)
 	fundid_df = get_productids()
 	tradetime = datetime.now()
 	tradedate = tradetime.date()

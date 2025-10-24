@@ -51,7 +51,7 @@ def get_stock_close_local():
 	file_path = f'pre_closeprice/{ddate}.csv'
 	if not os.path.exists(file_path):
 		get_stock_close_prices()
-	predf = pd.read_csv(file_path, names=['symbol', 'preclose'], skiprows=1, dtype={'symbol':str, 'preclose':float})
+	predf = pd.read_csv(file_path, names=['symbol', 'preclose'], dtype={'symbol':str, 'preclose':float})
 	return predf
 
 def get_productids():
