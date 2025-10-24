@@ -31,8 +31,16 @@ def get_stock_close_prices_wind():
 	fetch_eod_wind2local()
 	ddate = datetime.now().strftime('%Y%m%d')
 	file_path = f'eod/ashare_eodprices_{ddate}.csv'
-	eod_df = pd.read_csv(file_path, dtype={'S_INFO_WINDCODE':str, 'S_DQ_PRECLOSE':float})
-	close_price_df = eod_df[['S_INFO_WINDCODE', 'S_DQ_PRECLOSE']]
+	hnow = datetime.now().hour
+	if hnow < 15:
+		eod_df = pd.read_csv(file_path, dtype={'S_INFO_WINDCODE':str, 'S_DQ_PRECLOSE':float})
+		close_price_df = eod_df[['S_INFO_WINDCODE', 'S_DQ_PRECLOSE']]
+		print(f'houroftime={hnow} fetch preclose from wind eod')
+	else:
+		eod_df = pd.read_csv(file_path, dtype={'S_INFO_WINDCODE':str, 'S_DQ_CLOSE':float})
+		close_price_df = eod_df[['S_INFO_WINDCODE', 'S_DQ_CLOSE']]
+		print(f'houroftime={hnow} fetch last from wind eod')
+	
 	close_price_df = close_price_df.rename(columns={'S_INFO_WINDCODE':'symbol', 'S_DQ_PRECLOSE':'preclose'})
 	stats_file()
 	close_price_df.to_csv(f'pre_closeprice/{ddate}.csv')
