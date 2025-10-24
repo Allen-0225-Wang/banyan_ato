@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, text, MetaData, Table, select, func
 from sqlalchemy.orm import sessionmaker
+from typing import Optional, List, Dict, Tuple, Any, Union
 import pandas as pd
 
 class MySQLAlchemyQuery:
@@ -108,16 +109,12 @@ class MySQLAlchemyQuery:
 def sqlalchemy_usage():
     # 创建连接
     db = MySQLAlchemyQuery(
-        host='localhost',
-        user='your_username',
-        password='your_password',
-        database='your_database'
+        host='44.241.205.126',
+        user='shenzhen',
+        password='dvXGXNc32Q0r7t5db6GzaPGCnYs',
+        database='gbops'
     )
     
     # 查询数据到DataFrame
-    df = db.query_to_dataframe("SELECT * FROM users WHERE age > %s", {'age': 18})
+    df = db.query_to_dataframe("SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT = %s", {'TRADE_DT': "20251023"})
     print(df.head())
-    
-    # 获取表结构
-    table_info = db.get_table_info('users')
-    print(table_info)
