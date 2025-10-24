@@ -19,6 +19,7 @@ def combine_cols(posdf):
 	newdf['symbol'] = newdf['symbol'].apply(lambda x : f'{x}.SH' if int(x) > 599999 else f'{x}.SZ')
 	newdf['trade_dt'] = tradedate
 	newdf['opdate'] = tradetime.strftime('%Y-%m-%d %H:%M:%S')
+	print(newdf)
 	newdf = newdf[['trade_dt', 'fund_stra_id', 'symbol', 'holdQty', 'preclose', 'opdate']]
 	newdf = newdf.rename(columns={'symbol':'s_info_windcode', 'fund_stra_id':'fund_id', 
 								  'holdQty':'shares', 'preclose':'s_dq_close'})
