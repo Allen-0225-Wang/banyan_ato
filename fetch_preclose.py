@@ -29,9 +29,9 @@ def get_stock_close_prices():
 
 def get_stock_close_prices_wind():
 	fetch_eod_wind2local()
-	ddate = datetime.now().strftime('%Y%m%d')
-	file_path = f'eod/ashare_eodprices_{ddate}.csv'
+	ddate = datetime.now().strftime('%Y-%m-%d')
 	hnow = datetime.now().hour
+	file_path = f'eod/ashare_eodprices_{ddate}.csv'
 	if hnow < 15:
 		eod_df = pd.read_csv(file_path, dtype={'S_INFO_WINDCODE':str, 'S_DQ_PRECLOSE':float})
 		close_price_df = eod_df[['S_INFO_WINDCODE', 'S_DQ_PRECLOSE']]

@@ -68,10 +68,11 @@ def fetch_eod_wind2local():
         password='dvXGXNc32Q0r7t5db6GzaPGCnYs=',
         database='wind'
     )
+    kdate = datetime.now().strftime('%Y-%m-%d')
     now = datetime.now().strftime('%Y%m%d')
     df = db.query_to_dataframe(f"SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT={now}")
-    df.to_csv(f'eod/ashare_eodprices_{now}.csv', index=False)
-    print(f'查询结果已保存到 eod/ashare_eodprices_{now}.csv')
+    df.to_csv(f'eod/ashare_eodprices_{kdate}.csv', index=False)
+    print(f'查询结果已保存到 eod/ashare_eodprices_{kdate}.csv')
 
 if __name__ == "__main__":
     fetch_eod_wind2local()
