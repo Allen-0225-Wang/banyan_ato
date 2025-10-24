@@ -10,18 +10,15 @@ from utils import keep_sql
 
 
 def combine_cols(posdf):
-	#price_df = get_stock_close_local()
+	price_df = get_stock_close_local()
 	fundid_df = get_productids()
 	tradetime = datetime.now()
-	tradedate = tradetime.date() - timedelta(days=1)
-	#newdf = pd.merge(posdf, price_df, on='symbol', how='left')
-	#newdf = pd.merge(newdf, fundid_df, on='unitId', how='left')
-	newdf = pd.merge(posdf, fundid_df, on='unitId', how='left')
-	#fundid_df.to_csv(f'positions/fundid.csv')
+	tradedate = tradetime.date()
+	newdf = pd.merge(posdf, price_df, on='symbol', how='left')
+	newdf = pd.merge(newdf, fundid_df, on='unitId', how='left')
 	newdf['symbol'] = newdf['symbol'].apply(lambda x : f'{x}.SH' if int(x) > 599999 else f'{x}.SZ')
 	newdf['trade_dt'] = tradedate
 	newdf['opdate'] = tradetime.strftime('%Y-%m-%d %H:%M:%S')
-	newdf['preclose'] = 0
 	newdf = newdf[['trade_dt', 'fund_stra_id', 'symbol', 'holdQty', 'preclose', 'opdate']]
 	newdf = newdf.rename(columns={'symbol':'s_info_windcode', 'fund_stra_id':'fund_id', 
 								  'holdQty':'shares', 'preclose':'s_dq_close'})
@@ -47,8 +44,7 @@ def main():
 	hnow = datetime.now().hour
 	print(pdf)
 	#sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
-	sqlname = 'fund_position'
-	keep_sql(db_config, pdf, sqlname, fund_position_mapping)
+	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
 
 
 if __name__ == '__main__':
