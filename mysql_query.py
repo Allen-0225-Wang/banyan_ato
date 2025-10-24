@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, text, MetaData, Table, select, func
 from sqlalchemy.orm import sessionmaker
-from typing import Optional, List, Dict, Tuple, Any, Union
+from typing import Optional, List, Dict
 import pandas as pd
 
 class MySQLAlchemyQuery:
