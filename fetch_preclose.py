@@ -50,7 +50,8 @@ def get_stock_close_local():
 	ddate = datetime.now().date()
 	file_path = f'pre_closeprice/{ddate}.csv'
 	if not os.path.exists(file_path):
-		get_stock_close_prices()
+		# get_stock_close_prices()
+		get_stock_close_prices_wind
 	predf = pd.read_csv(file_path, names=['symbol', 'preclose'], skiprows=1, dtype={'symbol':str, 'preclose':float})
 	return predf
 
