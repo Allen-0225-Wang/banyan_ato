@@ -97,6 +97,9 @@ if __name__ == '__main__':
 	futu = ato.get_futureaccountinfo()
 	futuinfo = ato.query_futureinfo(futu)
 
+	credit = ato.query_creditinfo(1, 10)
+	print(credit)
+
 	#acctdf = ato.query_cashbyproduct(unitIds, accounts)
 	#print(acctdf)
 
