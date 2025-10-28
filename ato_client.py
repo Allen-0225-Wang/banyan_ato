@@ -57,8 +57,8 @@ class ATOClient:
 		tradedf.to_csv(f'trades/{self.date}.csv')
 		return tradedf
 	
-	def query_creditdebtdetail(self, account, pageNo, pageSize, debt_type=1):
-		entity = self.user.queryCreditDebtDetail(account=account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
+	def query_creditdebtdetail(self, accounts, pageNo, pageSize, debt_type=1):
+		entity = self.user.queryCreditDebtDetail(accounts=accounts, pageNo=pageNo, pageSize=pageSize, debt_type=1)
 		print(entity)
 		# entityList = entity['pageData']
 		# while pageNo < entity['pageCount']:
@@ -104,10 +104,8 @@ if __name__ == '__main__':
 	accts = ato.get_marginaccountinfo()
 	unitIds = [itr['unitId'] for itr in accts]
 	accounts = [itr['accountId'] for itr in accts]
-	print(accts)
-	for acct in accts:
-		acct_df = ato.query_creditdebtdetail(acct, 1, 100)
-		print(acct)
+	acct_df = ato.query_creditdebtdetail(accts, 1, 100)
+	print(acct_df)
 	
 	#@query future
 	# futu = ato.get_futureaccountinfo()
