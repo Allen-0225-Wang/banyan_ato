@@ -107,14 +107,15 @@ if __name__ == '__main__':
 	# for acct in accounts:
 	# 	acct_df = ato.query_creditdebtdetail(acct, 1, 100, debt_type=1)
 	# 	print(acct_df)
+	acct_df = ato.query_creditdebtdetail(203800124, 1, 100, debt_type=1)
 	
 	#@query future
 	# futu = ato.get_futureaccountinfo()
 	# futuinfo = ato.query_futureinfo(futu)
 
 	#@query credit
-	credit = ato.query_creditinfo(1, 10)
-	print(credit)
+	#credit = ato.query_creditinfo(1, 10)
+	#print(credit)
 
 	#@query cash by product
 	#acctdf = ato.query_cashbyproduct(unitIds, accounts)
