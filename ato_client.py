@@ -101,20 +101,20 @@ if __name__ == '__main__':
 	ato = ATOClient(userinfo)
 	ato.login()
 	#@query account
-	accts = ato.get_marginaccountinfo()
-	unitIds = [itr['unitId'] for itr in accts]
-	accounts = [itr['accountId'] for itr in accts]
-	for acct in accounts:
-		acct_df = ato.query_creditdebtdetail(acct, 1, 100, debt_type=1)
-		print(acct_df)
+	# accts = ato.get_marginaccountinfo()
+	# unitIds = [itr['unitId'] for itr in accts]
+	# accounts = [itr['accountId'] for itr in accts]
+	# for acct in accounts:
+	# 	acct_df = ato.query_creditdebtdetail(acct, 1, 100, debt_type=1)
+	# 	print(acct_df)
 	
 	#@query future
 	# futu = ato.get_futureaccountinfo()
 	# futuinfo = ato.query_futureinfo(futu)
 
 	#@query credit
-	# credit = ato.query_creditinfo(1, 10)
-	# print(credit)
+	credit = ato.query_creditinfo(1, 10)
+	print(credit)
 
 	#@query cash by product
 	#acctdf = ato.query_cashbyproduct(unitIds, accounts)
