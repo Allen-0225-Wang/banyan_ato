@@ -24,14 +24,18 @@ def combine_cols(posdf):
 	newdf.to_csv(f'positions/{tradedate}.csv')
 	return newdf
 
-def get_posinfo(account_type=0):
+def get_posinfo(account_type=1):
 	ato = ATOClient(userinfo)
 	ato.login()
-	if account_type == 0:
+	if account_type == 1:
+		#@query stock for all
 		accts = ato.get_stockaccountinfo()
+		pdf = ato.query_positionbyproduct(accts, "test")
 	else:
+		#@query stock for margin
 		accts = ato.get_marginaccountinfo()
-	pdf = ato.query_positionbyproduct(accts, "test")
+		pdf = ato.query_positionbyproduct(accts, "test", [2])
+	
 	pdict = pdf[['unitId', 'symbol', 'holdQty']]
 	pdict['symbol'] = pdict['symbol'].apply(lambda x : f'{x}.SH' if int(x) > 599999 else f'{x}.SZ')
 	pdict.to_csv(f'positions/unitId.csv')
