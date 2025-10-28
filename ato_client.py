@@ -58,12 +58,12 @@ class ATOClient:
 		return tradedf
 	
 	def query_creditdebtdetail(self, account, pageNo, pageSize, debt_type=1):
-		entity = self.user.queryCreditDebtDetail(account['accountId'], pageNo=pageNo, pageSize=pageSize, debt_type=1)
+		entity = self.user.queryCreditDebtDetail(account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
 		print(entity)
 		entityList = entity['pageData']
 		while pageNo < entity['pageCount']:
 			pageNo += 1
-			entity = self.user.queryCreditDebtDetail(account['accountId'], pageNo=pageNo, pageSize=pageSize, debt_type=1)
+			entity = self.user.queryCreditDebtDetail(account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
 			entityList.extend(entity['pageData'])
 		creditdebtdf = pd.DataFrame(entityList)
 		return creditdebtdf
