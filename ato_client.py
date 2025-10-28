@@ -58,7 +58,7 @@ class ATOClient:
 		return tradedf
 	
 	def query_creditdebtdetail(self, account, pageNo, pageSize, debt_type=1):
-		entity = self.user.queryCreditDebtDetail(account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
+		entity = self.user.queryCreditDebtDetail(account=account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
 		print(entity)
 		# entityList = entity['pageData']
 		# while pageNo < entity['pageCount']:
@@ -107,7 +107,6 @@ if __name__ == '__main__':
 	for acct in accts:
 		acct_df = ato.query_creditdebtdetail(acct, 1, 100)
 		print(acct)
-		print(acct_df)
 	
 	#@query future
 	# futu = ato.get_futureaccountinfo()
