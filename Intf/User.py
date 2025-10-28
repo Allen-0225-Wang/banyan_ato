@@ -139,7 +139,7 @@ class User(object):
         url = "https://%s/ato/user/queryCreditDebtDetail" % self.hosts
         queryParam = {
                       "accountId" : accounts,
-                      "debtQrytype" : debt_type,
+                      "debtQryType" : debt_type,
                       "pageNo" : pageNo,
                       "pageSize" : pageSize
                      }
