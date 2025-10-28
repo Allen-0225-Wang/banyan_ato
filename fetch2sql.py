@@ -46,8 +46,8 @@ def main():
 	#pdf = get_posinfo_local('2025-09-23')[['trade_dt','fund_id','s_info_windcode','shares','s_dq_close','opdate']]
 	hnow = datetime.now().hour
 	print(pdf)
-	#sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
-	#keep_sql(db_config, pdf, sqlname, fund_position_mapping)
+	# sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
+	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
 
 
 if __name__ == '__main__':
