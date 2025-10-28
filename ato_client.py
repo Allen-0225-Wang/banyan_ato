@@ -104,6 +104,7 @@ if __name__ == '__main__':
 	accts = ato.get_marginaccountinfo()
 	unitIds = [itr['unitId'] for itr in accts]
 	accounts = [itr['accountId'] for itr in accts]
+	print()
 	acct_df = ato.query_creditdebtdetail(accts, 1, 100)
 	print(acct_df)
 	

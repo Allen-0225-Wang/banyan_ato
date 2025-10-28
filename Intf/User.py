@@ -145,6 +145,7 @@ class User(object):
                      }
         data = json.loads(json.dumps(queryParam))
         params = json.dumps(data, ensure_ascii=False)
+        print(params)
         res = requests.post(url, data=json.dumps(ast.literal_eval(params)), headers=header, verify=False)
         print(res.json())
         return res.json().get("responseEntity")
