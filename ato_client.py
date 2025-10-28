@@ -88,27 +88,31 @@ if __name__ == '__main__':
 	userinfo = {'operatorNo':20380003, 'password':'Jt731229', 'mac':'', 'operInfo':''}
 	ato = ATOClient(userinfo)
 	ato.login()
-	##@query fund cash
-	accts = ato.get_stockaccountinfo()
-	#unitIds = [itr['unitId'] for itr in accts]
-	#accounts = [itr['accountId'] for itr in accts]
+	#@query account
+	accts = ato.get_marginaccountinfo()
+	unitIds = [itr['unitId'] for itr in accts]
+	accounts = [itr['accountId'] for itr in accts]
+	print(accts)
+	print(unitIds)
+	print(accounts)
 	
-	##@query future
-	futu = ato.get_futureaccountinfo()
-	futuinfo = ato.query_futureinfo(futu)
+	#@query future
+	# futu = ato.get_futureaccountinfo()
+	# futuinfo = ato.query_futureinfo(futu)
 
-	credit = ato.query_creditinfo(1, 10)
-	print(credit)
+	#@query credit
+	# credit = ato.query_creditinfo(1, 10)
+	# print(credit)
 
+	#@query cash by product
 	#acctdf = ato.query_cashbyproduct(unitIds, accounts)
 	#print(acctdf)
 
+	#@query trade by product
 	#tradedf = ato.query_tradebyproduct(accounts)
 	#print(tradedf)
 
-	#creditdf = ato.query_creditinfo(1, 10)
-
-	##@query fund position
+	#@query fund position
 	#pdf = ato.query_positionbyproduct(accts, "test")
 	#pdict = pdf.set_index('unitId')[['symbol', 'holdQty']]
 	#print(pdict)
