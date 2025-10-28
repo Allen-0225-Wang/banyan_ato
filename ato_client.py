@@ -58,7 +58,7 @@ class ATOClient:
 		return tradedf
 	
 	def query_creditdebtdetail(self, account, pageNo, pageSize, debt_type=1):
-		entity = self.user.queryCreditDebtDetail(account['accountId'], debt_type=1)
+		entity = self.user.queryCreditDebtDetail(account['accountId'], pageNo=pageNo, pageSize=pageSize, debt_type=1)
 		entityList = entity['pageData']
 		pageNo = 1
 		pageSize = 1000
