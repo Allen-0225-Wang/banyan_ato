@@ -24,10 +24,13 @@ def combine_cols(posdf):
 	newdf.to_csv(f'positions/{tradedate}.csv')
 	return newdf
 
-def get_posinfo():
+def get_posinfo(account_type=0):
 	ato = ATOClient(userinfo)
 	ato.login()
-	accts = ato.get_stockaccountinfo()
+	if account_type == 0:
+		accts = ato.get_stockaccountinfo()
+	else:
+		accts = ato.get_marginaccountinfo()
 	pdf = ato.query_positionbyproduct(accts, "test")
 	pdict = pdf[['unitId', 'symbol', 'holdQty']]
 	pdict['symbol'] = pdict['symbol'].apply(lambda x : f'{x}.SH' if int(x) > 599999 else f'{x}.SZ')
@@ -39,12 +42,12 @@ def get_posinfo_local(date):
 	return pd.read_csv(f'positions/{date}.csv')
 
 def main():
-	pdf = get_posinfo()
+	pdf = get_posinfo(account_type=2)
 	#pdf = get_posinfo_local('2025-09-23')[['trade_dt','fund_id','s_info_windcode','shares','s_dq_close','opdate']]
 	hnow = datetime.now().hour
 	print(pdf)
-	sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
-	keep_sql(db_config, pdf, sqlname, fund_position_mapping)
+	#sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
+	#keep_sql(db_config, pdf, sqlname, fund_position_mapping)
 
 
 if __name__ == '__main__':
