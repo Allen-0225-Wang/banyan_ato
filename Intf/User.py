@@ -134,14 +134,14 @@ class User(object):
         res = requests.post(url, data=json.dumps(ast.literal_eval(params)), headers=header, verify=False)
         return res.json().get("responseEntity")
     
-    def queryCreditDebtDetail(self, account, debt_type=1):
+    def queryCreditDebtDetail(self, account, pageNo, pageSize, debt_type=1):
         header = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8", "Authorization": self.token}
         url = "https://%s/ato/user/queryCreditDebtDetail" % self.hosts
         queryParam = {
                       "accountIds" : account,
                       "debtQrytype" : debt_type,
-                      "pageNo" : 1,
-                      "pageSize" : 100
+                      "pageNo" : pageNo,
+                      "pageSize" : pageSize
                      }
         data = json.loads(json.dumps(queryParam))
         params = json.dumps(data, ensure_ascii=False)

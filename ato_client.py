@@ -56,6 +56,18 @@ class ATOClient:
 		tradedf = pd.DataFrame(entityList)
 		tradedf.to_csv(f'trades/{self.date}.csv')
 		return tradedf
+	
+	def query_creditdebtdetail(self, account, pageNo, pageSize, debt_type=1):
+		entity = self.user.queryCreditDebtDetail(account['accountId'], debt_type=1)
+		entityList = entity['pageData']
+		pageNo = 1
+		pageSize = 1000
+		while pageNo < entity['pageCount']:
+			pageNo += 1
+			entity = self.user.queryCreditDebtDetail(account['accountId'], pageNo=pageNo, pageSize=pageSize, debt_type=1)
+			entityList.extend(entity['pageData'])
+		creditdebtdf = pd.DataFrame(entityList)
+		return creditdebtdf
 
 	def query_cashbyproduct(self, unitIds, acctIds):
 		fundinfo = self.user.queryUnitFund(unitIds, acctIds)
@@ -92,9 +104,11 @@ if __name__ == '__main__':
 	accts = ato.get_marginaccountinfo()
 	unitIds = [itr['unitId'] for itr in accts]
 	accounts = [itr['accountId'] for itr in accts]
+	acct_df = pd.DataFrame()
+	for acct in accts:
+		acct_df += ato.query_creditdebtdetail(acct, 1, 100)
 	print(accts)
-	print(unitIds)
-	print(accounts)
+	print(acct_df)
 	
 	#@query future
 	# futu = ato.get_futureaccountinfo()
