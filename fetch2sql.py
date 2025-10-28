@@ -43,13 +43,15 @@ def get_posinfo_local(date):
 	return pd.read_csv(f'positions/{date}.csv')
 
 def main():
-	pdf = get_posinfo(account_type=1)
 	# pdf = get_posinfo_local('2025-09-23')[['trade_dt','fund_id','s_info_windcode','shares','s_dq_close','opdate']]
-	hnow = datetime.now().hour
+	# pdf = get_posinfo(account_type=1)
+	# hnow = datetime.now().hour
+	# sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
+	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
+	pdf = get_posinfo(account_type=1)
+	pdf = pdf.query('fund_id==64')
 	print(pdf)
-	sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
-	keep_sql(db_config, pdf, sqlname, fund_position_mapping)
-
+	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
 
 if __name__ == '__main__':
 	main()

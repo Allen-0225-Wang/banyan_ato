@@ -19,7 +19,7 @@ qa_db_config = {
 			}
 
 fund_position_mapping = {
-			        'fund_id': types.INTEGER(),
+			        	'fund_id': types.INTEGER(),
 					    'trade_dt': types.DATE(),
 					    's_info_wincode': types.String(length=50),
 					    'shares': types.INTEGER(),
