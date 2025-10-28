@@ -40,6 +40,7 @@ class ATOClient:
 		while pageNo < entity['pageCount']:
 			pageNo += 1
 			entity = self.user.queryUnitPosition(account, query_types, symbol, pageNo, pageSize)
+			print(entity)
 			entityList.extend(entity['pageData'])
 		prodf = pd.DataFrame(entityList)
 		return prodf
