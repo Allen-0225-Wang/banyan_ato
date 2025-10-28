@@ -48,10 +48,13 @@ def main():
 	# hnow = datetime.now().hour
 	# sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
 	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
+
+	## special handle margin account
 	pdf = get_posinfo(account_type=1)
 	pdf = pdf.query('fund_id==64')
+	sqlname = 'fund_margin_position'
 	print(pdf)
-	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
+	keep_sql(db_config, pdf, sqlname, fund_position_mapping)
 
 if __name__ == '__main__':
 	main()
