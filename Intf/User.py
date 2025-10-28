@@ -138,7 +138,7 @@ class User(object):
         header = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8", "Authorization": self.token}
         url = "https://%s/ato/user/queryCreditDebtDetail" % self.hosts
         queryParam = {
-                      "accountId" : account,
+                      "accountId" : int(account),
                       "debtQrytype" : debt_type,
                       "pageNo" : pageNo,
                       "pageSize" : pageSize
