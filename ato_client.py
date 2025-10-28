@@ -29,7 +29,7 @@ class ATOClient:
 			sys.exit()
 
 	def query_account(self):
-		self.accountinfo = self.user.getAcctInfo();
+		self.accountinfo = self.user.getAcctInfo()
 
 	def query_positionbyproduct(self, account:dict, productname:str, query_types=[1, 2]):
 		symbol = ""
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 	unitIds = [itr['unitId'] for itr in accts]
 	accounts = [itr['accountId'] for itr in accts]
 	for acct in accounts:
-		acct_df = ato.query_creditdebtdetail(acct, 1, 100, debt_type=2)
+		acct_df = ato.query_creditdebtdetail(acct, 1, 100, debt_type=1)
 		print(acct_df)
 	
 	#@query future
