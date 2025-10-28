@@ -13,11 +13,12 @@ def get_productids():
 	pdf = pd.read_csv(f'config/products.csv')[['unitId', 'fund_stra_id']]
 	return pdf
 
-def keep_sql(db_config:json, table:pd.DataFrame, tablename:str, tablemap:json, if_exists='append'):
+def keep_sql(db_config:json, table:pd.DataFrame, tablename:str, tablemap:json, if_exists='replace'):
 	try:
 		engine = create_engine(
 				f"mysql+pymysql://{db_config['user']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}"
 			)
+		
 		table.to_sql(
 					 name=tablename,
 					 con=engine,

@@ -28,10 +28,8 @@ def get_posinfo(account_type=1):
 	ato = ATOClient(userinfo)
 	ato.login()
 	if account_type == 1:
-		#@query stock for all
 		accts = ato.get_stockaccountinfo()
 	else:
-		#@query stock for margin
 		accts = ato.get_marginaccountinfo()
 	
 	pdf = ato.query_positionbyproduct(accts, "test")
