@@ -36,7 +36,6 @@ class ATOClient:
 		pageNo = 1
 		pageSize = 1000
 		entity = self.user.queryUnitPosition(account, query_types, symbol, pageNo, pageSize)
-		print(entity)
 		entityList = entity['pageData']
 		while pageNo < entity['pageCount']:
 			pageNo += 1
@@ -60,9 +59,8 @@ class ATOClient:
 	
 	def query_creditdebtdetail(self, account, pageNo, pageSize, debt_type=1):
 		entity = self.user.queryCreditDebtDetail(account['accountId'], pageNo=pageNo, pageSize=pageSize, debt_type=1)
+		print(entity)
 		entityList = entity['pageData']
-		pageNo = 1
-		pageSize = 1000
 		while pageNo < entity['pageCount']:
 			pageNo += 1
 			entity = self.user.queryCreditDebtDetail(account['accountId'], pageNo=pageNo, pageSize=pageSize, debt_type=1)
