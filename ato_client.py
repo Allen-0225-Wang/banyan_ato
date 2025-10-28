@@ -104,8 +104,9 @@ if __name__ == '__main__':
 	accts = ato.get_marginaccountinfo()
 	unitIds = [itr['unitId'] for itr in accts]
 	accounts = [itr['accountId'] for itr in accts]
-	acct_df = ato.query_creditdebtdetail(accounts, 1, 100)
-	print(acct_df)
+	for acct in accounts:
+		print(acct)
+		acct_df = ato.query_creditdebtdetail(accounts, 1, 100)
 	
 	#@query future
 	# futu = ato.get_futureaccountinfo()
