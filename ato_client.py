@@ -105,7 +105,7 @@ if __name__ == '__main__':
 	unitIds = [itr['unitId'] for itr in accts]
 	accounts = [itr['accountId'] for itr in accts]
 	for acct in accounts:
-		acct_df = ato.query_creditdebtdetail(acct, 1, 100)
+		acct_df = ato.query_creditdebtdetail(acct, 1, 100, debt_type=2)
 		print(acct_df)
 	
 	#@query future
