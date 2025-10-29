@@ -105,6 +105,20 @@ class User(object):
         params = json.dumps(data, ensure_ascii=False)
         res = requests.post(url, data=json.dumps(ast.literal_eval(params)), headers=header, verify=False)
         return res.json().get("responseEntity")
+    
+    def queryUnitAsset(self, unitIds:list, accountIds:list, query_type=2):
+        header = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8", "Authorization": self.token}
+        url = "https://%s/ato/user/queryAssetInfo" % self.hosts
+        queryParam = {
+                      "assetLevel": query_type,
+                      "unitIds": unitIds, 
+                      "accountIds": accountIds
+                      }
+        
+        data = json.loads(json.dumps(queryParam))
+        params = json.dumps(data, ensure_ascii=False)
+        res = requests.post(url, data=json.dumps(ast.literal_eval(params)), headers=header, verify=False)
+        return res.json().get("responseEntity")
 
     def queryCreditAssetInfo(self, pageNo, pageSize):
         header = {"Accept": "*/*", "Content-Type": "application/json;charset=utf-8", "Authorization": self.token}

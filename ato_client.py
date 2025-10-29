@@ -78,6 +78,12 @@ class ATOClient:
 		acctIds = [itr['accountId'] for itr in accounts]
 		fundinfo = self.user.queryUnitFund(unitIds, acctIds)
 		return pd.DataFrame(fundinfo)
+	
+	def query_assetbyproduct(self, accounts, query_type=2):
+		unitIds = [itr['unitId'] for itr in accounts]
+		acctIds = [itr['accountId'] for itr in accounts]
+		assetinfo = self.user.queryUnitAsset(unitIds, acctIds, query_type=query_type)
+		return pd.DataFrame(assetinfo)
 
 	def query_futureinfo(self, unitAccounts):
 		futuinfo = self.user.queryFutureUnitPositionInfo(unitAccounts)
@@ -122,7 +128,7 @@ if __name__ == '__main__':
 
 	#@query cash by product
 
-	acctdf = ato.query_cashbyproduct(accts)
+	acctdf = ato.query_assetbyproduct(accts)
 	print(acctdf)
 
 	#@query trade by product
