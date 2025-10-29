@@ -47,6 +47,14 @@ def get_posinfo(account_type=1):
 	pdf = combine_cols(pdict, account_type)
 	return pdf
 
+def get_cashinfo(account_type=1):
+	ato = ATOClient(userinfo)
+	ato.login()
+	accts = ato.get_stockaccountinfo()
+	cash_df = ato.query_cashbyproduct(accts)
+	print(cash_df)
+
+
 def get_posinfo_local(date):
 	return pd.read_csv(f'positions/{date}.csv')
 
@@ -61,11 +69,11 @@ def main():
 	#sqlname = 'fund_margin_position'
 	#print(pdf)
 	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
-	account_types = {1 : 'fund_position', 2 : 'fund_margin_position', 3 : 'fund_margin_position'}
-	for _k, _v in account_types.items():
-		pdf = get_posinfo(_k)
-		print(pdf)
+	#account_types = {1 : 'fund_position', 2 : 'fund_margin_position', 3 : 'fund_margin_position'}
+	#for _k, _v in account_types.items():
+		#pdf = get_posinfo(_k)
 		#keep_sql(db_config, pdf, _v, fund_position_mapping)
+	get_cashinfo()
 
 if __name__ == '__main__':
 	main()

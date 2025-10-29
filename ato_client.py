@@ -73,9 +73,11 @@ class ATOClient:
 			acct_df = pd.concat([acct_df, self.query_creditdebtdetail(acct, 1, 100, debt_type=debt_type)])
 		return acct_df
 
-	def query_cashbyproduct(self, unitIds, acctIds):
+	def query_cashbyproduct(self, accounts):
+		unitIds = [itr['unitId'] for itr in accounts]
+		acctIds = [itr['accountId'] for itr in accounts]
 		fundinfo = self.user.queryUnitFund(unitIds, acctIds)
-		return fundinfo
+		return pd.DataFrame(fundinfo)
 
 	def query_futureinfo(self, unitAccounts):
 		futuinfo = self.user.queryFutureUnitPositionInfo(unitAccounts)
@@ -105,9 +107,7 @@ if __name__ == '__main__':
 	ato = ATOClient(userinfo)
 	ato.login()
 	#@query account
-	#accts = ato.get_marginaccountinfo()
-	#unitIds = [itr['unitId'] for itr in accts]
-	#accounts = [itr['accountId'] for itr in accts]
+	accts = ato.get_stockaccountinfo()
 	#acct_df = pd.DataFrame()
 	#for acct in accounts:
 	#	acct_df = pd.concat([acct_df, ato.query_creditdebtdetail(acct, 1, 100, debt_type=1)])
@@ -121,8 +121,9 @@ if __name__ == '__main__':
 	#print(credit)
 
 	#@query cash by product
-	#acctdf = ato.query_cashbyproduct(unitIds, accounts)
-	#print(acctdf)
+
+	acctdf = ato.query_cashbyproduct(accts)
+	print(acctdf)
 
 	#@query trade by product
 	#tradedf = ato.query_tradebyproduct(accounts)
