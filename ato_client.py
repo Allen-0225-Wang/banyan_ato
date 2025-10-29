@@ -57,17 +57,21 @@ class ATOClient:
 		tradedf.to_csv(f'trades/{self.date}.csv')
 		return tradedf
 	
-	def query_creditdebtdetail(self, accounts, pageNo, pageSize, debt_type=1):
-		entity = self.user.queryCreditDebtDetail(accounts=accounts, pageNo=pageNo, pageSize=pageSize, debt_type=debt_type)
-		print(entity)
-		# entityList = entity['pageData']
-		# while pageNo < entity['pageCount']:
-		# 	pageNo += 1
-		# 	entity = self.user.queryCreditDebtDetail(account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
-		# 	entityList.extend(entity['pageData'])
-		# creditdebtdf = pd.DataFrame(entityList)
-		# return creditdebtdf
-		return None
+	def query_creditdebtdetail(self, account, pageNo, pageSize, debt_type=1):
+		entity = self.user.queryCreditDebtDetail(account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
+		entityList = entity['pageData'] if entity['pageData'] != None else []
+		while pageNo < entity['pageCount']:
+			pageNo += 1
+			entity = self.user.queryCreditDebtDetail(account, pageNo=pageNo, pageSize=pageSize, debt_type=1)
+			entityList.extend(entity['pageData'])
+		creditdebtdf = pd.DataFrame(entityList)
+		return creditdebtdf.rename(columns={'compactInitQty' : 'holdQty'})
+
+	def query_credictdebtdetail_byaccounts(self, accounts, debt_type=1):
+		acct_df = pd.DataFrame()
+		for acct in accounts:
+			acct_df = pd.concat([acct_df, self.query_creditdebtdetail(acct, 1, 100, debt_type=debt_type)])
+		return acct_df
 
 	def query_cashbyproduct(self, unitIds, acctIds):
 		fundinfo = self.user.queryUnitFund(unitIds, acctIds)
@@ -75,7 +79,7 @@ class ATOClient:
 
 	def query_futureinfo(self, unitAccounts):
 		futuinfo = self.user.queryFutureUnitPositionInfo(unitAccounts)
-		return futuinfo
+		return pd.DataFrame(futuinfo['pageData'])
 
 	def query_creditinfo(self, pageNo, pageSize):
 		creditasset = self.user.queryCreditAssetInfo(1, 10)
@@ -101,14 +105,13 @@ if __name__ == '__main__':
 	ato = ATOClient(userinfo)
 	ato.login()
 	#@query account
-	# accts = ato.get_marginaccountinfo()
-	# unitIds = [itr['unitId'] for itr in accts]
-	# accounts = [itr['accountId'] for itr in accts]
-	# for acct in accounts:
-	# 	acct_df = ato.query_creditdebtdetail(acct, 1, 100, debt_type=1)
-	# 	print(acct_df)
-	acct_df = ato.query_creditdebtdetail(203800124, 1, 100, debt_type=1)
-	
+	#accts = ato.get_marginaccountinfo()
+	#unitIds = [itr['unitId'] for itr in accts]
+	#accounts = [itr['accountId'] for itr in accts]
+	#acct_df = pd.DataFrame()
+	#for acct in accounts:
+	#	acct_df = pd.concat([acct_df, ato.query_creditdebtdetail(acct, 1, 100, debt_type=1)])
+	#
 	#@query future
 	# futu = ato.get_futureaccountinfo()
 	# futuinfo = ato.query_futureinfo(futu)
