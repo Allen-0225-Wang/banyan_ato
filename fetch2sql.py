@@ -50,10 +50,18 @@ def get_posinfo(account_type=1):
 def get_cashinfo(account_type=1):
 	ato = ATOClient(userinfo)
 	ato.login()
+	tradetime = datetime.now()
+	tradedate = tradetime.date()
 	accts = ato.get_stockaccountinfo()
-	cash_df = ato.query_cashbyproduct(accts)
-	print(cash_df)
-
+	cash_df = ato.query_assetbyproduct(accts)
+	fundid_df = get_productids()
+	cash_df['cash'] = cash_df['netAsset'].astype(float) - cash_df['stockAsset'].astype(float)
+	cash_df['margin_allow'], cash_df['margin_used'] = 0, 0
+	cash_df['trade_dt'], cash_df['opdate'] = tradedate, tradetime.strftime('%Y-%m-%d %H:%M:%S')
+	cash_df = pd.merge(cash_df, fundid_df, on='unitId', how='left')
+	cash_df = cash_df.rename(columns={'fund_stra_id': 'fund_id', 'netAsset': 'asset'})
+	columns = ['fund_id', 'trade_dt', 'cash', 'asset', 'margin_allow', 'margin_used', 'opdate']
+	return cash_df[columns]
 
 def get_posinfo_local(date):
 	return pd.read_csv(f'positions/{date}.csv')
@@ -73,7 +81,9 @@ def main():
 	#for _k, _v in account_types.items():
 		#pdf = get_posinfo(_k)
 		#keep_sql(db_config, pdf, _v, fund_position_mapping)
-	get_cashinfo()
+
+	cash_df = get_cashinfo()
+	keep_sql(db_config, cash_df, 'fund_cash', fund_cash_mapping)
 
 if __name__ == '__main__':
 	main()

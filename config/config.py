@@ -38,6 +38,16 @@ fund_trades_mapping = {
 						'qty': types.INTEGER()
 					  }
 
+fund_cash_mapping = {
+						'fund_id': types.INTERGER(),
+						'trade_dt': types.DATE(),
+						'cash': types.FLOAT(precision=2),
+						'asset': types.FLOAT(precision=2),
+						'margin_allow': types.FLOAT(precision=2),
+						'margin_used': types.FLOAT(precision=2)
+						'opdate': types.DATE()
+					}
+
 userinfo = {
 			'operatorNo':20380003,
 	        'password':'Jt731229', 
