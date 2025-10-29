@@ -39,12 +39,12 @@ fund_trades_mapping = {
 					  }
 
 fund_cash_mapping = {
-						'fund_id': types.INTERGER(),
+						'fund_id': types.INTEGER(),
 						'trade_dt': types.DATE(),
 						'cash': types.FLOAT(precision=2),
 						'asset': types.FLOAT(precision=2),
 						'margin_allow': types.FLOAT(precision=2),
-						'margin_used': types.FLOAT(precision=2)
+						'margin_used': types.FLOAT(precision=2),
 						'opdate': types.DATE()
 					}
 

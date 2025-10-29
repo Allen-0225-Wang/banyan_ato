@@ -77,10 +77,10 @@ def main():
 	#sqlname = 'fund_margin_position'
 	#print(pdf)
 	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
-	#account_types = {1 : 'fund_position', 2 : 'fund_margin_position', 3 : 'fund_margin_position'}
-	#for _k, _v in account_types.items():
-		#pdf = get_posinfo(_k)
-		#keep_sql(db_config, pdf, _v, fund_position_mapping)
+	account_types = {1 : 'fund_position', 2 : 'fund_margin_position', 3 : 'fund_margin_position'}
+	for _k, _v in account_types.items():
+   		pdf = get_posinfo(_k)
+   		keep_sql(db_config, pdf, _v, fund_position_mapping)
 
 	cash_df = get_cashinfo()
 	keep_sql(db_config, cash_df, 'fund_cash', fund_cash_mapping)
