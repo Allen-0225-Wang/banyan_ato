@@ -42,5 +42,4 @@ def get_trades_local():
 
 if __name__ == '__main__':
 	posdf = combine_trades()
-	#posdf = get_trades_local()
 	keep_sql(db_config, posdf, 'fund_trades', fund_trades_mapping)

@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, text, MetaData, Table, select, func
 from sqlalchemy.orm import sessionmaker
 from typing import Optional, List, Dict
-from datetime import datetime
+from datetime import datetime, timedelta
 import pandas as pd
 
 class MySQLAlchemyQuery:
@@ -69,7 +69,8 @@ def fetch_eod_wind2local():
         database='wind'
     )
     kdate = datetime.now().strftime('%Y-%m-%d')
-    now = datetime.now().strftime('%Y%m%d')
+    #now = datetime.now().strftime('%Y%m%d')
+    now = (datetime.now() - timedelta(days=1)).strftime('%Y%m%d')
     df = db.query_to_dataframe(f"SELECT * FROM ASHAREEODPRICES WHERE TRADE_DT={now}")
     df.to_csv(f'eod/ashare_eodprices_{kdate}.csv', index=False)
     print(f'查询结果已保存到 eod/ashare_eodprices_{kdate}.csv')

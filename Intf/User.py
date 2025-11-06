@@ -132,7 +132,6 @@ class User(object):
 					 }
         data = json.loads(json.dumps(queryParam))
         res = requests.post(url, data=json.dumps(data), headers=header, verify=False)
-        print(res.json())
         return res.json().get("responseEntity")
 
     def queryFutureUnitPositionInfo(self, unitAccounts:list):

@@ -91,7 +91,7 @@ class ATOClient:
 
 	def query_creditinfo(self, pageNo, pageSize):
 		creditasset = self.user.queryCreditAssetInfo(1, 10)
-		return creditasset
+		return pd.DataFrame(creditasset['pageData'])
 			
 	def get_stockaccountinfo(self):
 		self.query_account()
@@ -123,13 +123,13 @@ if __name__ == '__main__':
 	# futuinfo = ato.query_futureinfo(futu)
 
 	#@query credit
-	#credit = ato.query_creditinfo(1, 10)
-	#print(credit)
+	credit = ato.query_creditinfo(1, 10)
+	print(credit[['unitId', 'financeAvailAmt', 'financeUsedAmt']])
 
 	#@query cash by product
 
-	acctdf = ato.query_assetbyproduct(accts)
-	print(acctdf)
+	#acctdf = ato.query_assetbyproduct(accts)
+	#print(acctdf)
 
 	#@query trade by product
 	#tradedf = ato.query_tradebyproduct(accounts)

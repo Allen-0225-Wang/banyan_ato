@@ -17,11 +17,15 @@ def combine_cols(posdf, account_type):
 	tradedate = tradetime.date()
 	newdf = pd.merge(posdf, price_df, on='symbol', how='left')
 	newdf = pd.merge(newdf, fundid_df, on='unitId', how='left')
-	newdf['trade_dt'] = tradedate
-	newdf['opdate'] = tradetime.strftime('%Y-%m-%d %H:%M:%S')
-	newdf = newdf[['trade_dt', 'fund_stra_id', 'symbol', 'holdQty', 'preclose', 'opdate']]
-	newdf = newdf.rename(columns={'symbol':'s_info_windcode', 'fund_stra_id':'fund_id', 
-								  'holdQty':'shares', 'preclose':'s_dq_close'})
+	newdf['trade_dt'], newdf['opdate'] = tradedate, tradetime.strftime('%Y-%m-%d %H:%M:%S')
+	if account_type < 3:
+		newdf = newdf[['trade_dt', 'fund_stra_id', 'symbol', 'holdQty', 'preclose', 'opdate']]
+		newdf = newdf.rename(columns={'symbol':'s_info_windcode', 'fund_stra_id':'fund_id', 
+								  	  'holdQty':'shares', 'preclose':'s_dq_close'})
+	else:
+		newdf = newdf[['trade_dt', 'fund_stra_id', 'symbol', 'holdQty', 'preSettPx', 'opdate']]
+		newdf = newdf.rename(columns={'symbol':'s_info_windcode', 'fund_stra_id':'fund_id', 
+								  	  'holdQty':'shares', 'preSettPx':'s_dq_close'})
 	newdf.to_csv(f'positions/{tradedate}_{account_type}.csv')
 	return newdf if account_type < 3 else newdf.query('fund_id<0')
 
@@ -38,11 +42,11 @@ def get_posinfo(account_type=1):
 	elif account_type == 3:
 		accts = ato.get_futureaccountinfo()
 		pdf = ato.query_futureinfo(accts)
-		pdf = pdf.groupby(['unitId', 'symbol']).agg({'holdQty' : 'sum'}).reset_index()
+		pdf = pdf.groupby(['unitId', 'symbol']).agg({'holdQty': 'sum', 'preSettPx': 'last'}).reset_index()
 	else:
 		pdf = pd.DataFrame()
 	
-	pdict = pdf[['unitId', 'symbol', 'holdQty']]
+	pdict = pdf[['unitId', 'symbol', 'holdQty']] if account_type < 3 else pdf[['unitId', 'symbol', 'holdQty', 'preSettPx']]
 	pdict['symbol'] = pdict['symbol'].apply(lambda x : f'{x}.SH' if int(x) > 599999 else f'{x}.SZ') if account_type < 3 else pdict['symbol']
 	pdf = combine_cols(pdict, account_type)
 	return pdf
@@ -67,21 +71,13 @@ def get_posinfo_local(date):
 	return pd.read_csv(f'positions/{date}.csv')
 
 def main():
-	#pdf = get_posinfo(account_type=1)
-	#hnow = datetime.now().hour
-	#sqlname = 'fund_position' if hnow >= 15 else 'fund_initial_position'
-	#keep_sql(db_config, pdf, sqlname, fund_position_mapping)
-
-	## special handle margin account
-	#pdf = get_posinfo(account_type=3)
-	#sqlname = 'fund_margin_position'
-	#print(pdf)
-	# keep_sql(db_config, pdf, sqlname, fund_position_mapping)
-	account_types = {1 : 'fund_position', 2 : 'fund_margin_position', 3 : 'fund_margin_position'}
+	## save position
+	account_types = {1 : 'fund_position', 2 : 'fund_margin_position', 3 : 'fund_position'}
 	for _k, _v in account_types.items():
    		pdf = get_posinfo(_k)
    		keep_sql(db_config, pdf, _v, fund_position_mapping)
 
+	## save cash
 	cash_df = get_cashinfo()
 	keep_sql(db_config, cash_df, 'fund_cash', fund_cash_mapping)
 
